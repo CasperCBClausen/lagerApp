@@ -3,11 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule, Button} from 'primeng/primeng';
+import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { LagerComponent } from './components/lager/lager.component';
 import { InfoboardComponent } from './components/infoboard/infoboard.component';
+
+import {LagerService} from './services/lager/lager.service';
 
 const appRoutes: Routes = [
   {
@@ -48,7 +50,7 @@ const appRoutes: Routes = [
     CalendarModule,
     GrowlModule
   ],
-  providers: [],
+  providers: [LagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

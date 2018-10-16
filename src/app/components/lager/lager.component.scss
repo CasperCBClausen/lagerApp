@@ -16,6 +16,12 @@
     height: 50vh;
     overflow: auto;
 
+    .product-dropdown{
+        
+        .ui-dropdown-filter-icon{
+            top: .6em;
+        }
+    }
     .ui-inputtext{
         padding: 0em;
         padding-right: 0.5em;
