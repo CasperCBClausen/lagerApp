@@ -1,0 +1,67 @@
+.lagerContainer{
+    // width: 100%;
+    // height: 100%;
+
+}
+
+// .ui-g-1.ui-g-2.ui-g-3.ui-g-4.ui-g-5.ui-g-6.ui-g-7.ui-g-8.ui-g-9.ui-g-10.ui-g-11.ui-g-12{
+//         padding: 0em;
+// }
+
+.noPadding{
+    padding:0em;
+}
+
+.square{
+    height: 50vh;
+    overflow: auto;
+
+    .ui-inputtext{
+        padding: 0em;
+        padding-right: 0.5em;
+        vertical-align: middle;
+    }
+
+    h3{
+        text-align: center;
+    }
+
+    .ui-g-2{
+        padding-top: 0.2em;
+       padding-bottom: 0em;
+
+    }
+
+     .ui-g-10{
+        padding-bottom: 0em;
+        padding-top: 0.2em;
+     }
+
+     .checkbox{
+         padding-left: 0.2em;
+     }
+
+    .storeItemButton{
+        .ui-button{
+        background: darkgreen !important;
+        color: white;
+        border: 1px solid darkgreen !important;
+        font-size: small;
+        }
+
+        .ui-button:hover{
+            background: green !important;
+            border: 1px solid green !important;
+        }
+    }
+
+     .withBorders{
+        border:1px solid black;
+    }
+
+    .ui-chkbox-box.ui-state-active{
+        background:white;
+        color: black;
+        border:1px solid black;
+    }
+}

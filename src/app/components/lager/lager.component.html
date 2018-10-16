@@ -1,0 +1,120 @@
+<div class="lagerContainer">
+  <div class="ui-g">
+    <div class="ui-g-6 noPadding square" id="indSquare" (click)="resizeOnClick('ind')" style="background-color:red;">
+      <h3>Ind</h3>
+      <p-growl [(value)]="msgs" life="2000"></p-growl>
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <b *ngIf="indTelefon.imei">Imei: {{indTelefon.imei}}</b>
+          <b *ngIf="!indTelefon.imei">Indtast Imei/SN..</b></div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2">Produkt</div>
+        <div class="ui-g-10">
+          <p-dropdown [options]="phones" [(ngModel)]="indTelefon.product" [style]="{'width':'12em'}" filter="true">
+            <ng-template let-item pTemplate="selectedItem">
+              <img src="assets/showcase/images/demo/phone/{{item.label}}.jpg" style="width:16px;vertical-align:middle" />
+              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-phone pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <img src="assets/showcase/images/demo/phone/{{phone.label}}.jpg" style="width:24px;position:absolute;top:1px;left:5px" />
+                <div style="font-size:14px;float:right;margin-top:4px">{{phone.label}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="product" label="" [(ngModel)]="rememberedInputs"
+            inputId="product"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span>Fra</span></div>
+        <div class="ui-g-10">
+          <p-dropdown [options]="origins" [style]="{'width':'12em'}" [(ngModel)]="indTelefon.origin"></p-dropdown>
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="origin" label="" [(ngModel)]="rememberedInputs"
+            inputId="origin"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span>Navn</span></div>
+        <div class="ui-g-10">
+          <input id="input" class="ng-dirty ng-invalid" type="text" size="20" pInputText [(ngModel)]="indTelefon.name">
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="name" label="" [(ngModel)]="rememberedInputs"
+            inputId="name"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span>Faktura/ID</span></div>
+        <div class="ui-g-10">
+          <input id="input" type="text" class="ng-dirty ng-invalid" size="20" pInputText [(ngModel)]="indTelefon.id">
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="id" label="" [(ngModel)]="rememberedInputs" inputId="id"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span>Dato</span></div>
+        <div class="ui-g-10">
+          <!-- <input id="input" type="text" size="20" placeholder="mm/dd/yyyy" pInputText [(ngModel)]="indTelefon.date"> -->
+          <p-calendar [(ngModel)]="indTelefon.date" dateFormat="mm/dd/yy"></p-calendar>
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="date" label="" [(ngModel)]="rememberedInputs"
+            inputId="date"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span>Leveringsmetode</span></div>
+        <div class="ui-g-10">
+          <p-dropdown [options]="deliveryMethods" [style]="{'width':'12em'}" [(ngModel)]="indTelefon.deliveryMethod"></p-dropdown>
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="deliveryMethod" label="" [(ngModel)]="rememberedInputs"
+            inputId="deliveryMethod"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span>Tracking</span></div>
+        <div class="ui-g-10">
+          <input id="input" type="text" size="20" pInputText [(ngModel)]="indTelefon.tracking">
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="tracking" label="" [(ngModel)]="rememberedInputs"
+            inputId="tracking"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-2"><span><b>Imei/SN</b></span></div>
+        <div class="ui-g-10">
+          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="indTelefon.imei">
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="imei" label="" [(ngModel)]="rememberedInputs"
+            inputId="imei"></p-checkbox>
+        </div>
+      </div>
+
+      <div class="ui-g">
+          <div class="ui-g-2 storeItemButton">
+              <button pButton type="button" label="til lager ->" (click)="sendToStorage()"></button>
+          </div>
+      </div>
+    </div>
+
+    <div class="ui-g-6 noPadding square" id="udSquare" (click)="resizeOnClick('ud')" style="background-color:blue;">
+      <h3>Ud</h3>
+    </div>
+
+    <div class="ui-g-6 noPadding square" id="statusSquare" (click)="resizeOnClick('status')" style="background-color:yellow;">
+      <h3>Status</h3>
+      <div class="ui-g">
+        <div class="ui-g-12" *ngIf="showInStatus">
+          <ul>
+            <li *ngFor="let item of indTelefon | keyvalue">{{item.key}} - {{item.value}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class=" ui-g-6 square noPadding" id="lagerSquare" (click)="resizeOnClick('lager')" style="background-color:green;">
+      <h3>Lager</h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+.appContainer{
+
+    .pageLogo{
+        text-align: center;
+        background-image: url("../assets/textures/norsetech.png");
+        background-size: auto 2em;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    .pageHeader{
+        text-align: center;
+        background-color: gold;
+    }
+
+    .pageMenu{
+        height: 100vh;
+        //background-image: url("../assets/textures/woodenTexture.jpg");
+        border-right: 1px solid black;
+
+        nav{
+            margin: 0.5em;
+            display: table;
+            .menuLetter{
+                max-width: 1em;
+                min-width: 1em;
+                max-height: 2em;
+                min-height: 2em;
+            }
+        }
+
+        .menuButton{
+            text-align: center;
+            a{
+                display: table-cell;
+                vertical-align: middle;
+                padding-left: 1em;
+                color:black;
+                text-decoration: none;
+            }
+
+            .active-link{
+                font-weight: bold;
+            }
+        }
+
+        .menuButton:hover{
+            a{color: gray}
+        }
+
+        .menuButton:active{
+
+            a{
+                //color: black;
+            }
+        }
+    }
+
+    .pageView{
+        padding:0em;
+    }
+}
