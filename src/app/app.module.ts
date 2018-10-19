@@ -6,10 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
-import { LagerComponent } from './components/lager/lager.component';
+import { IndComponent } from './components/ind/ind.component';
 import { InfoboardComponent } from './components/infoboard/infoboard.component';
 
-import {LagerService} from './services/lager/lager.service';
+import {IndService} from './services/ind/ind.service';
+import {NotificationService} from './services/notification/notification.service';
 
 const appRoutes: Routes = [
   {
@@ -18,9 +19,9 @@ const appRoutes: Routes = [
     data: { title: 'home' }
   },
   {
-    path: 'lager',
-    component: LagerComponent,
-    data: { title: 'Lager' }
+    path: 'ind',
+    component: IndComponent,
+    data: { title: 'Ind' }
   },
   { path: '',
     redirectTo: '/home',
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LagerComponent,
+    IndComponent,
     InfoboardComponent
   ],
   imports: [
@@ -50,7 +51,10 @@ const appRoutes: Routes = [
     CalendarModule,
     GrowlModule
   ],
-  providers: [LagerService],
+  providers: [
+    IndService,
+    NotificationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

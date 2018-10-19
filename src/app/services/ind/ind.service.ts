@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Lager } from '../../classes/lager';
-import { Message, SelectItem } from 'primeng/components/common/api';
+import { Lager } from '../../classes/lager';
+import { SelectItem } from 'primeng/components/common/api';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LagerService {
-
-  msgs: Message[] = [];
+export class IndService {
 
   showInStatus = false;
 
@@ -22,17 +21,19 @@ export class LagerService {
     deliveryMethod: 'TNT'
   };
 
-  
+
   indTelefonDetails = Object.keys(this.indTelefon);
 
   rememberedInputs: string[] = ['product', 'origin', 'name', 'id', 'date', 'deliveryMethod', 'tracking', 'imei'];
 
-  
+
   phones: SelectItem[];
   origins: SelectItem[];
   deliveryMethods: SelectItem[];
-  
-  constructor() {
+
+  constructor(
+    private notificationService: NotificationService
+  ) {
     this.phones = [
       { label: 'Samsung S7 Sort', value: 'Samsung S7 Sort' },
       { label: 'Apple IPhone 7', value: 'Apple Iphone 7' },
@@ -52,7 +53,7 @@ export class LagerService {
       { label: 'PostNord', value: 'PostNord' },
       { label: 'DHL', value: 'DHL' }
     ];
-   }
+  }
 
   resizeOnClick(square: string) {
     let indSquare = document.getElementById("indSquare");
@@ -65,7 +66,7 @@ export class LagerService {
         //Resize ind
         indSquare.style.height = "75vh";
         indSquare.style.width = "75%";
-        indSquare.style.zIndex = "1";
+        indSquare.style.zIndex = "0";
         udSquare.style.height = "75vh";
         udSquare.style.width = "25%";
         udSquare.style.zIndex = "0";
@@ -84,7 +85,7 @@ export class LagerService {
         indSquare.style.zIndex = "0";
         udSquare.style.height = "75vh";
         udSquare.style.width = "75%";
-        udSquare.style.zIndex = "1";
+        udSquare.style.zIndex = "0";
         statusSquare.style.height = "25vh";
         statusSquare.style.width = "50%";
         statusSquare.style.zIndex = "0";
@@ -103,7 +104,7 @@ export class LagerService {
         udSquare.style.zIndex = "0";
         statusSquare.style.height = "75vh";
         statusSquare.style.width = "75%";
-        statusSquare.style.zIndex = "1";
+        statusSquare.style.zIndex = "0";
         lagerSquare.style.height = "75vh";
         lagerSquare.style.width = "25%";
         lagerSquare.style.zIndex = "0";
@@ -122,7 +123,7 @@ export class LagerService {
         statusSquare.style.zIndex = "0";
         lagerSquare.style.height = "75vh";
         lagerSquare.style.width = "75%";
-        lagerSquare.style.zIndex = "1";
+        lagerSquare.style.zIndex = "0";
         break;
       }
     }
@@ -130,49 +131,43 @@ export class LagerService {
 
   sendToStorage() {
     if (!this.indTelefon.date) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'vælg dato' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'vælg dato');
+      return false;
     }
     if (!this.indTelefon.deliveryMethod) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'vælg leveringsmetode' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'vælg leveringsmetode');
+      return false;
     }
     if (!this.indTelefon.id) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'udfyld Faktura/ID' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'udfyld Faktura/ID');
+      return false;
     }
     if (!this.indTelefon.imei) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'udfyld imei' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'udfyld imei');
+      return false;
     }
     if (!this.indTelefon.name) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'udfyld navn' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'udfyld navn');
+      return false;
     }
     if (!this.indTelefon.origin) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'udfyld fra' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'udfyld fra');
+      return false;
     }
     if (!this.indTelefon.product) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'vælg produkt' });
-      return;
+      this.notificationService.notify('error', 'Manglende info', 'vælg produkt');
+      return false;
     }
     if (!this.indTelefon.tracking) {
-      this.msgs = [];
-      this.msgs.push({ severity: 'error', summary: 'Manglende info', detail: 'udfyld tracking' });
-      return;
-    }
-    this.showInStatus = !this.showInStatus;
-    if (this.showInStatus) {
-      setTimeout(() => { this.resizeOnClick("status") }, 50);
+      this.notificationService.notify('error', 'Manglende info', 'udfyld tracking');
+      return false;
     }
 
+    this.showInStatus = !this.showInStatus;
+    if (this.showInStatus) {
+      this.notificationService.notify('success', 'OK', 'Vare sendt til lager');
+    }
+
+    return true;
   }
 }
