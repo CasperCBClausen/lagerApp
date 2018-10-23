@@ -1,3 +1,68 @@
-<p>
-  infoboard works!
-</p>
+<div class="infoBoardContainer">
+
+  <div class="ui-g">
+    <div class="ui-g-12 noPadding fullPage" id="infoBoardSquare" style="background-color:black; color:white">
+      <h3>Oversigt</h3>
+      <div class="ui-g">
+        <div class="ui-g-12 clock">
+          <h3>{{clock | date:'HH:mm:ss'}}</h3>
+        </div>
+        <div class="ui-g-4">
+          <div class="ui-g">
+            <div class="ui-g-3"></div>
+            <div class="ui-g-6 merch">
+              <div class="ui-g">
+                <div class="ui-g-12">
+                  <h3>Varer solgt</h3>
+                </div>
+                <div class="ui-g-12">
+                  <h3>{{merchSold}}</h3>
+                </div>
+                <div class="ui-g-12"></div>
+              </div>
+            </div>
+            <div class="ui-g-3"></div>
+          </div>
+        </div>
+        <div class="ui-g-4">
+            <div class="ui-g">
+                <div class="ui-g-3"></div>
+                <div class="ui-g-6 value">
+                  <div class="ui-g">
+                    <div class="ui-g-12">
+                      <h3>Total værdi</h3>
+                    </div>
+                    <div class="ui-g-12">
+                        <h3 *ngIf="totalValue <= 5000" class="red">{{totalValue | currency:'ddk':'':'4.2-2'}} kr</h3>
+                        <h3 *ngIf="totalValue < 10000 && totalValue > 5000" class="yellow">{{totalValue | currency:'ddk':'':'4.2-2'}} kr</h3>
+                        <h3 *ngIf="totalValue >= 10000" class="green">{{totalValue | currency:'ddk':'':'4.2-2'}} kr</h3>
+                    </div>
+                    <div class="ui-g-12"></div>
+                  </div>
+                </div>
+                <div class="ui-g-3"></div>
+              </div>
+        </div>
+        <div class="ui-g-4">
+            <div class="ui-g">
+                <div class="ui-g-3"></div>
+                <div class="ui-g-6 profit">
+                  <div class="ui-g">
+                    <div class="ui-g-12">
+                      <h3>Total profit</h3>
+                    </div>
+                    <div class="ui-g-12">
+                      <h3 *ngIf="totalProfit <= 1000" class="red">{{totalProfit | currency:'ddk':'':'4.2-2'}} kr</h3>
+                      <h3 *ngIf="totalProfit < 2000 && totalProfit > 1000" class="yellow">{{totalProfit | currency:'ddk':'':'4.2-2'}} kr</h3>
+                      <h3 *ngIf="totalProfit >= 2000" class="green">{{totalProfit | currency:'ddk':'':'4.2-2'}} kr</h3>
+                    </div>
+                    <div class="ui-g-12"></div>
+                  </div>
+                </div>
+                <div class="ui-g-3"></div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
