@@ -357,7 +357,7 @@ var IndComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  infoboard works!\n</p>\n"
+module.exports = "<div class=\"infoBoardContainer\">\n\n  <div class=\"ui-g\">\n    <div class=\"ui-g-12 noPadding fullPage\" id=\"infoBoardSquare\" style=\"background-color:black; color:white\">\n      <h3>Oversigt</h3>\n      <div class=\"ui-g\">\n        <div class=\"ui-g-12 clock\">\n          <h3>{{clock | date:'HH:mm:ss'}}</h3>\n        </div>\n        <div class=\"ui-g-4\">\n          <div class=\"ui-g\">\n            <div class=\"ui-g-3\"></div>\n            <div class=\"ui-g-6 merch\">\n              <div class=\"ui-g\">\n                <div class=\"ui-g-12\">\n                  <h3>Varer solgt</h3>\n                </div>\n                <div class=\"ui-g-12\">\n                  <h3>{{merchSold}}</h3>\n                </div>\n                <div class=\"ui-g-12\"></div>\n              </div>\n            </div>\n            <div class=\"ui-g-3\"></div>\n          </div>\n        </div>\n        <div class=\"ui-g-4\">\n            <div class=\"ui-g\">\n                <div class=\"ui-g-3\"></div>\n                <div class=\"ui-g-6 value\">\n                  <div class=\"ui-g\">\n                    <div class=\"ui-g-12\">\n                      <h3>Total værdi</h3>\n                    </div>\n                    <div class=\"ui-g-12\">\n                        <h3 *ngIf=\"totalValue <= 5000\" class=\"red\">{{totalValue | currency:'ddk':'':'4.2-2'}} kr</h3>\n                        <h3 *ngIf=\"totalValue < 10000 && totalValue > 5000\" class=\"yellow\">{{totalValue | currency:'ddk':'':'4.2-2'}} kr</h3>\n                        <h3 *ngIf=\"totalValue >= 10000\" class=\"green\">{{totalValue | currency:'ddk':'':'4.2-2'}} kr</h3>\n                    </div>\n                    <div class=\"ui-g-12\"></div>\n                  </div>\n                </div>\n                <div class=\"ui-g-3\"></div>\n              </div>\n        </div>\n        <div class=\"ui-g-4\">\n            <div class=\"ui-g\">\n                <div class=\"ui-g-3\"></div>\n                <div class=\"ui-g-6 profit\">\n                  <div class=\"ui-g\">\n                    <div class=\"ui-g-12\">\n                      <h3>Total profit</h3>\n                    </div>\n                    <div class=\"ui-g-12\">\n                      <h3 *ngIf=\"totalProfit <= 1000\" class=\"red\">{{totalProfit | currency:'ddk':'':'4.2-2'}} kr</h3>\n                      <h3 *ngIf=\"totalProfit < 2000 && totalProfit > 1000\" class=\"yellow\">{{totalProfit | currency:'ddk':'':'4.2-2'}} kr</h3>\n                      <h3 *ngIf=\"totalProfit >= 2000\" class=\"green\">{{totalProfit | currency:'ddk':'':'4.2-2'}} kr</h3>\n                    </div>\n                    <div class=\"ui-g-12\"></div>\n                  </div>\n                </div>\n                <div class=\"ui-g-3\"></div>\n              </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -368,7 +368,7 @@ module.exports = "<p>\n  infoboard works!\n</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".infoBoardContainer {\n  width: 100%; }\n  .infoBoardContainer .fullPage {\n    height: 100vh;\n    overflow: auto; }\n  .infoBoardContainer .noPadding {\n    padding: 0em; }\n  .infoBoardContainer h3 {\n    text-align: center; }\n  .infoBoardContainer .ui-g-4 .merch, .infoBoardContainer .ui-g-4 .value, .infoBoardContainer .ui-g-4 .profit {\n    border-top: 1px solid white;\n    border-bottom: 1px solid white; }\n  .infoBoardContainer .ui-g-4 .merch .green, .infoBoardContainer .ui-g-4 .value .green, .infoBoardContainer .ui-g-4 .profit .green {\n      color: green; }\n  .infoBoardContainer .ui-g-4 .merch .yellow, .infoBoardContainer .ui-g-4 .value .yellow, .infoBoardContainer .ui-g-4 .profit .yellow {\n      color: yellow; }\n  .infoBoardContainer .ui-g-4 .merch .red, .infoBoardContainer .ui-g-4 .value .red, .infoBoardContainer .ui-g-4 .profit .red {\n      color: red; }\n"
 
 /***/ }),
 
@@ -395,8 +395,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var InfoboardComponent = /** @class */ (function () {
     function InfoboardComponent() {
+        this.clock = new Date();
+        this.merchSold = 5;
+        this.totalValue = 3400 * this.merchSold;
+        this.totalProfit = this.totalValue - (2940 * this.merchSold);
     }
     InfoboardComponent.prototype.ngOnInit = function () {
+        this.startClock();
+    };
+    InfoboardComponent.prototype.startClock = function () {
+        var _this = this;
+        setInterval(function () {
+            _this.clock = new Date();
+        }, 1000);
     };
     InfoboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
