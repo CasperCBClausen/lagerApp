@@ -1,0 +1,16 @@
+.lagerContainer{
+    width: 100%;
+
+    .fullPage{
+        height: 100vh;
+        overflow: auto;
+    }
+    
+    .noPadding{
+        padding:0em;
+    }
+
+    h3{
+        text-align: center;
+    }
+}

@@ -1,8 +1,7 @@
 <div class="indContainer">
 
-    <p-growl [(value)]="msgs" life="2000"></p-growl>
   <div class="ui-g">
-    <div class="ui-g-6 noPadding square" id="indSquare" (click)="resizeOnClick('ind')" style="background-color:red;">
+    <div class="ui-g-12 noPadding fullPage" id="indSquare" style="background-color:#e27a84;">
       <h3>Ind</h3>
       <div class="ui-g">
         <div class="ui-g-12">
@@ -98,29 +97,6 @@
               <button pButton type="button" label="til lager ->" (click)="sendToStorage()"></button>
           </div>
       </div>
-    </div>
-
-    <div class="ui-g-6 noPadding square" id="udSquare" (click)="resizeOnClick('ud')" style="background-color:blue;">
-      <h3>Ud</h3>
-
-
-    </div>
-
-    <div class="ui-g-6 noPadding square" id="statusSquare" (click)="resizeOnClick('status')" style="background-color:yellow;">
-      <h3>Status</h3>
-
-      <div class="ui-g">
-        <div class="ui-g-12" *ngIf="showInStatus">
-          <ul>
-            <li *ngFor="let item of indTelefon | keyvalue">{{item.key}} - {{item.value}}</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-    <div class=" ui-g-6 square noPadding" id="lagerSquare" (click)="resizeOnClick('lager')" style="background-color:green;">
-      <h3>Lager</h3>
-
     </div>
   </div>
 </div>

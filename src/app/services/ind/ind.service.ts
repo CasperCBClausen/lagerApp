@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Lager } from '../../classes/lager';
 import { SelectItem } from 'primeng/components/common/api';
 import { NotificationService } from '../notification/notification.service';
+import { SpinnerService } from '../spinner/spinner.service';
+import { StatusService } from '../status/status.service';
+import { ProductApiService } from '../apiservices/product/product-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +35,9 @@ export class IndService {
   deliveryMethods: SelectItem[];
 
   constructor(
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private statusService: StatusService,
+    private productApiService: ProductApiService
   ) {
     this.phones = [
       { label: 'Samsung S7 Sort', value: 'Samsung S7 Sort' },
@@ -130,6 +135,9 @@ export class IndService {
   }
 
   sendToStorage() {
+    //this.productApiService.getMyProducts(["Samsung:galaxy s7,galaxy 5", "Apple:iphone6,iphone7"]);
+    //this.productApiService.getAllProducts();
+    this.productApiService.saveProduct(this.indTelefon);
     if (!this.indTelefon.date) {
       this.notificationService.notify('error', 'Manglende info', 'vælg dato');
       return false;
@@ -163,10 +171,8 @@ export class IndService {
       return false;
     }
 
-    this.showInStatus = !this.showInStatus;
-    if (this.showInStatus) {
+      this.statusService.createEvent("Tilføjet vare til lager med imei: "+ this.indTelefon.imei);
       this.notificationService.notify('success', 'OK', 'Vare sendt til lager');
-    }
 
     return true;
   }

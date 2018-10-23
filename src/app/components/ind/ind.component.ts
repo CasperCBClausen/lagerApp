@@ -6,6 +6,7 @@ import { IndService } from '../../services/ind/ind.service';
 import { Lager } from '../../classes/lager';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../services/notification/notification.service';
+import { SpinnerService } from '../../services/spinner/spinner.service';
 
 @Component({
   selector: 'ind',
@@ -17,7 +18,8 @@ export class IndComponent implements OnInit, OnDestroy {
 
   constructor(
     private indService: IndService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private spinnerService: SpinnerService
   ) {
     this.showInStatus = indService.showInStatus;
     this.indTelefon = indService.indTelefon;
@@ -27,9 +29,6 @@ export class IndComponent implements OnInit, OnDestroy {
     this.origins = indService.origins;
     this.deliveryMethods = indService.deliveryMethods;
   }
-
-  msgs: Message[] = [];
-  subscription: Subscription;
   showInStatus = false;
 
   indTelefon: Lager;
@@ -43,19 +42,10 @@ export class IndComponent implements OnInit, OnDestroy {
   deliveryMethods: SelectItem[];
 
   ngOnInit(){
-    this.subscribeToNotifications();
+
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
-
-  subscribeToNotifications() {
-    this.subscription = this.notificationService.notificationChange
-    .subscribe(notification => {
-      this.msgs = [];
-      this.msgs.push(notification);
-    });
   }
 
   resizeOnClick(square: string) {
@@ -63,9 +53,11 @@ export class IndComponent implements OnInit, OnDestroy {
   }
 
   sendToStorage() {
+    this.spinnerService.notify(true);
     this.showInStatus = this.indService.sendToStorage();
-    if(this.showInStatus){
-      setTimeout(() => { this.resizeOnClick("status") }, 50);
-    }
+    this.spinnerService.notify(false);
+    // if(this.showInStatus){
+    //   setTimeout(() => { this.resizeOnClick("status") }, 50);
+    // }
   }
 }
