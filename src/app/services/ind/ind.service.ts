@@ -137,7 +137,7 @@ export class IndService {
   sendToStorage() {
     //this.productApiService.getMyProducts(["Samsung:galaxy s7,galaxy 5", "Apple:iphone6,iphone7"]);
     //this.productApiService.getAllProducts();
-    this.productApiService.saveProduct(this.indTelefon);
+    //this.productApiService.saveProduct(this.indTelefon);
     if (!this.indTelefon.date) {
       this.notificationService.notify('error', 'Manglende info', 'vælg dato');
       return false;
