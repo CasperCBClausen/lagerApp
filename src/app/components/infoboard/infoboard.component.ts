@@ -10,9 +10,9 @@ export class InfoboardComponent implements OnInit {
 
   
   clock:Date = new Date();
-  merchSold: number = 5;
+  merchSold: number = 7;
   totalValue: number = 3400*this.merchSold;
-  totalProfit: number = this.totalValue-(2940*this.merchSold); 
+  totalProfit: number = this.totalValue-(2540*this.merchSold); 
   constructor() { }
 
   ngOnInit() {
