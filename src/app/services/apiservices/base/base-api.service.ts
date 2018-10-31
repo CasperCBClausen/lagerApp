@@ -20,15 +20,11 @@ export class BaseApiService {
     return this.constructor.name.split('ApiService')[0];
   }
 
-  get(methodName?: string, data?: HttpParams) {
+  get<T>(methodName?: string, data?: HttpParams) {
 
     let paramsUrl = this.setMethodName(methodName)
 
-    this.http.get(API_URL + '/' + this.getName() + paramsUrl, { params: data })
-      .subscribe(
-        response => { console.log(response) },
-        error => { console.log(error) },
-        () => { console.log("get completed!") });
+    return this.http.get<T>(API_URL + '/' + this.getName() + paramsUrl, { params: data });
 
   }
 

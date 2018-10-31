@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base/base-api.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Lager } from 'src/app/classes/lager';
+import { Lager } from 'src/app/classes/Lager';
+import { Observable } from 'rxjs';
+import { Product } from 'src/app/classes/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class ProductApiService extends BaseApiService {
   }
 
   getAllProducts(){
-    super.get("getAll");
+    return super.get<Product[]>("GetAllProducts");
   }
 
   getMyProducts(items:string[]){

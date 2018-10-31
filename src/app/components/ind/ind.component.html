@@ -5,23 +5,23 @@
       <h3>Ind</h3>
       <div class="ui-g">
         <div class="ui-g-12">
-          <b *ngIf="indTelefon.imei">Imei: {{indTelefon.imei}}</b>
-          <b *ngIf="!indTelefon.imei">Indtast Imei/SN..</b>
+          <b *ngIf="indTelefon.imeisn">Imei: {{indTelefon.imei}}</b>
+          <b *ngIf="!indTelefon.imeisn">Indtast Imei/SN..</b>
         </div>
       </div>
 
       <div class="ui-g">
         <div class="ui-g-2">Produkt</div>
         <div class="ui-g-10 product-dropdown">
-          <p-dropdown [options]="phones" [(ngModel)]="indTelefon.product" [style]="{'width':'12em'}" filter="true">
+          <p-dropdown [options]="products" [(ngModel)]="indTelefon.product" optionLabel="name" [style]="{'width':'12em'}" filter="true">
             <ng-template let-item pTemplate="selectedItem">
-              <img src="assets/showcase/images/demo/phone/{{item.label}}.jpg" style="width:16px;vertical-align:middle" />
-              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+              <img src="assets/showcase/images/demo/phone/OnePlus3.jpg" style="width:16px;vertical-align:middle" />
+              <span style="vertical-align:middle; margin-left: .5em">{{item.value.name}}</span>
             </ng-template>
-            <ng-template let-phone pTemplate="item">
+            <ng-template let-product pTemplate="item">
               <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <img src="assets/showcase/images/demo/phone/{{phone.label}}.jpg" style="width:24px;position:absolute;top:1px;left:5px" />
-                <div style="font-size:14px;float:right;margin-top:4px">{{phone.label}}</div>
+                <img src="assets/showcase/images/demo/phone/OnePlus3.jpg" style="width:24px;position:absolute;top:1px;left:5px" />
+                <div style="font-size:14px;float:right;margin-top:4px">{{product.value.name}}</div>
               </div>
             </ng-template>
           </p-dropdown>
@@ -39,19 +39,19 @@
         </div>
       </div>
 
-      <div class="ui-g">
+      <!-- <div class="ui-g">
         <div class="ui-g-2"><span>Navn</span></div>
         <div class="ui-g-10">
           <input id="input" class="ng-dirty ng-invalid" type="text" size="20" pInputText [(ngModel)]="indTelefon.name">
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="name" label="" [(ngModel)]="rememberedInputs"
             inputId="name"></p-checkbox>
         </div>
-      </div>
+      </div> -->
 
       <div class="ui-g">
         <div class="ui-g-2"><span>Faktura/ID</span></div>
         <div class="ui-g-10">
-          <input id="input" type="text" class="ng-dirty ng-invalid" size="20" pInputText [(ngModel)]="indTelefon.id">
+          <input id="input" type="text" class="ng-dirty ng-invalid" size="20" pInputText [(ngModel)]="indTelefon.invoice">
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="id" label="" [(ngModel)]="rememberedInputs" inputId="id"></p-checkbox>
         </div>
       </div>
@@ -86,7 +86,7 @@
       <div class="ui-g">
         <div class="ui-g-2"><span><b>Imei/SN</b></span></div>
         <div class="ui-g-10">
-          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="indTelefon.imei">
+          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="indTelefon.imeisn">
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="imei" label="" [(ngModel)]="rememberedInputs"
             inputId="imei"></p-checkbox>
         </div>
@@ -96,6 +96,17 @@
           <div class="ui-g-2 storeItemButton">
               <button pButton type="button" label="til lager ->" (click)="sendToStorage()"></button>
           </div>
+          <div class="ui-g-12 storeItemButton">
+            <button pButton type="button" label="Opret Produkt ->" (click)="createProduct()"></button>
+        </div>
+        <div class="ui-g-12 storeItemButton">
+          <span><b>produktNavn</b></span>
+          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="newProduct.name">
+      </div>
+      <div class="ui-g-12 storeItemButton">
+          <span><b>produktSKU</b></span>
+          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="newProduct.sku">
+      </div>
       </div>
     </div>
   </div>

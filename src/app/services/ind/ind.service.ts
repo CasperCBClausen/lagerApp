@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Lager } from '../../classes/lager';
+import { Lager } from '../../classes/Lager';
 import { SelectItem } from 'primeng/components/common/api';
 import { NotificationService } from '../notification/notification.service';
 import { SpinnerService } from '../spinner/spinner.service';
 import { StatusService } from '../status/status.service';
 import { ProductApiService } from '../apiservices/product/product-api.service';
+import { Product } from 'src/app/classes/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,14 @@ export class IndService {
   showInStatus = false;
 
   indTelefon: Lager = {
-    product: 'Samsung S7 Sort',
-    name: "",
-    id: "",
+    id: null,
+    transType: "ind",
+    product: {id: null, name:"Samsung S7 Sort", sku:"PH-SAM-BLK"},
     date: new Date(),
     tracking: "",
-    imei: "",
+    imeisn: "",
     origin: 'Leverandør',
+    invoice: "",
     deliveryMethod: 'TNT'
   };
 
@@ -30,7 +32,7 @@ export class IndService {
   rememberedInputs: string[] = ['product', 'origin', 'name', 'id', 'date', 'deliveryMethod', 'tracking', 'imei'];
 
 
-  phones: SelectItem[];
+  //phones: SelectItem[];
   origins: SelectItem[];
   deliveryMethods: SelectItem[];
 
@@ -39,12 +41,13 @@ export class IndService {
     private statusService: StatusService,
     private productApiService: ProductApiService
   ) {
-    this.phones = [
-      { label: 'Samsung S7 Sort', value: 'Samsung S7 Sort' },
-      { label: 'Apple IPhone 7', value: 'Apple Iphone 7' },
-      { label: 'Razer Phone', value: 'Razer Phone' },
-      { label: 'OnePlus3', value: 'OnePlus3' }
-    ];
+
+    // this.phones = [
+    //   { label: 'Samsung S7 Sort', value: 'Samsung S7 Sort' },
+    //   { label: 'Apple IPhone 7', value: 'Apple Iphone 7' },
+    //   { label: 'Razer Phone', value: 'Razer Phone' },
+    //   { label: 'OnePlus3', value: 'OnePlus3' }
+    // ];
 
     this.origins = [
       { label: 'Leverandør', value: 'Leverandør' },
@@ -146,16 +149,12 @@ export class IndService {
       this.notificationService.notify('error', 'Manglende info', 'vælg leveringsmetode');
       return false;
     }
-    if (!this.indTelefon.id) {
-      this.notificationService.notify('error', 'Manglende info', 'udfyld Faktura/ID');
-      return false;
-    }
-    if (!this.indTelefon.imei) {
+    if (!this.indTelefon.imeisn) {
       this.notificationService.notify('error', 'Manglende info', 'udfyld imei');
       return false;
     }
-    if (!this.indTelefon.name) {
-      this.notificationService.notify('error', 'Manglende info', 'udfyld navn');
+    if (!this.indTelefon.invoice) {
+      this.notificationService.notify('error', 'Manglende info', 'udfyld faktura');
       return false;
     }
     if (!this.indTelefon.origin) {
@@ -171,7 +170,7 @@ export class IndService {
       return false;
     }
 
-      this.statusService.createEvent("Tilføjet vare til lager med imei: "+ this.indTelefon.imei);
+      this.statusService.createEvent("Tilføjet vare til lager med imei: "+ this.indTelefon.imeisn);
       this.notificationService.notify('success', 'OK', 'Vare sendt til lager');
 
     return true;

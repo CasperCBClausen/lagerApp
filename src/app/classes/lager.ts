@@ -1,10 +1,13 @@
+import {Product} from '../classes/Product';
+
 export class Lager {
-    product: string;
-    origin: string;
-    name: string;
-    id: string;
-    date: Date;
-    deliveryMethod: string;
-    tracking: string;
-    imei: string;
-  }
+  id: number;
+  transType: string;
+  imeisn: string;
+  product: Product;
+  origin: string;
+  invoice: string;
+  date: Date;
+  deliveryMethod: string;
+  tracking: string;
+}

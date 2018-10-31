@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  //apiUrl: "localhost:8000"
-  apiUrl: "www.fakefakefake.com"
+  apiUrl: "/api"
+  //apiUrl: "www.fakefakefake.com"
 };
 
 

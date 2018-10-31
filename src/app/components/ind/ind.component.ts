@@ -3,10 +3,12 @@ import { ViewEncapsulation } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { Message } from 'primeng/components/common/api';
 import { IndService } from '../../services/ind/ind.service';
-import { Lager } from '../../classes/lager';
+import { Lager } from '../../classes/Lager';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../services/notification/notification.service';
 import { SpinnerService } from '../../services/spinner/spinner.service';
+import { ProductApiService } from 'src/app/services/apiservices/product/product-api.service';
+import { Product } from 'src/app/classes/Product';
 
 @Component({
   selector: 'ind',
@@ -19,13 +21,14 @@ export class IndComponent implements OnInit, OnDestroy {
   constructor(
     private indService: IndService,
     private notificationService: NotificationService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private productApiService: ProductApiService
   ) {
     this.showInStatus = indService.showInStatus;
     this.indTelefon = indService.indTelefon;
     this.indTelefonDetails = indService.indTelefonDetails;
     this.rememberedInputs = indService.rememberedInputs;
-    this.phones = indService.phones;
+    //this.phones = indService.phones;
     this.origins = indService.origins;
     this.deliveryMethods = indService.deliveryMethods;
   }
@@ -33,19 +36,25 @@ export class IndComponent implements OnInit, OnDestroy {
 
   indTelefon: Lager;
 
+  newProduct: Product = new Product();
 
   indTelefonDetails;
   rememberedInputs: string[];
 
-  phones: SelectItem[];
+  products: Product[];
   origins: SelectItem[];
   deliveryMethods: SelectItem[];
 
-  ngOnInit(){
-
+  ngOnInit() {
+    this.productApiService.getAllProducts().subscribe(apiPhones => {
+      this.products = apiPhones;
+    },
+      error => {
+        this.notificationService.notify('error', "apiError", error);
+      });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
   }
 
   resizeOnClick(square: string) {
@@ -59,5 +68,9 @@ export class IndComponent implements OnInit, OnDestroy {
     // if(this.showInStatus){
     //   setTimeout(() => { this.resizeOnClick("status") }, 50);
     // }
+  }
+
+  createProduct(){
+    this.productApiService.post(this.newProduct);
   }
 }
