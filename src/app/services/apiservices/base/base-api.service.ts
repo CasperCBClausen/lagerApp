@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestOptions, Headers } from '@angular/http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from '../../notification/notification.service';
 
 
 const API_URL = environment.apiUrl;
@@ -13,6 +14,7 @@ export class BaseApiService {
 
   constructor(
     private http: HttpClient,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -25,39 +27,42 @@ export class BaseApiService {
     let paramsUrl = this.setMethodName(methodName)
 
     return this.http.get<T>(API_URL + '/' + this.getName() + paramsUrl, { params: data });
+      // .subscribe(
+      //   response => { return response }, // response from the server if successful
+      //   error => { this.handleErrorResponse(error) }, // Error from the server if something goes bad
+      //   () => { "this is run if the call completes successfully" }); // if the entire call is successful.
 
   }
 
-  post(data:any, methodName?: string, params?: HttpParams) {
+  post(data: any, methodName?: string, params?: HttpParams) {
     let paramsUrl = this.setMethodName(methodName)
 
-    this.http.post(API_URL + '/' + this.getName() + paramsUrl, data, { params: params })
-      .subscribe(
-        response => { console.log(response) },
-        error => { console.log(error) },
-        () => { console.log("get completed!") });
-
+    return this.http.post(API_URL + '/' + this.getName() + paramsUrl, data, { params: params });
+      // .subscribe(
+      //   response => { this.notificationService.notify('success', "Oprettet", response.toString()) }, // response from the server if successful
+      //   error => { this.handleErrorResponse(error) }, // Error from the server if something goes bad
+      //   () => { "this is run if the call completes successfully" }); // if the entire call is successful.
   }
 
-  put(methodName?: string, data?: HttpParams) {
+  put(data: any, methodName?: string, params?: HttpParams) {
     let paramsUrl = this.setMethodName(methodName)
 
-    this.http.post(API_URL + '/' + this.getName() + paramsUrl, { params: data })
+    this.http.put(API_URL + '/' + this.getName() + paramsUrl, data, { params: params })
       .subscribe(
-        response => { console.log(response) },
-        error => { console.log(error) },
-        () => { console.log("get completed!") });
+        response => { this.notificationService.notify('success', "Update", response.toString()) }, // response from the server if successful
+        error => { this.handleErrorResponse(error) }, // Error from the server if something goes bad
+        () => { "this is run if the call completes successfully" }); // if the entire call is successful.
 
   }
 
   delete(methodName?: string, data?: HttpParams) {
     let paramsUrl = this.setMethodName(methodName)
 
-    this.http.post(API_URL + '/' + this.getName() + paramsUrl, { params: data })
+    this.http.delete(API_URL + '/' + this.getName() + paramsUrl, { params: data })
       .subscribe(
-        response => { console.log(response) },
-        error => { console.log(error) },
-        () => { console.log("get completed!") });
+        response => { this.notificationService.notify('success', "Delete", response.toString()) },
+        error => { this.handleErrorResponse(error) },
+        () => { });
 
   }
 
@@ -67,6 +72,16 @@ export class BaseApiService {
     });
 
     return new RequestOptions({ headers: headers });
+  }
+
+  handleErrorResponse(error: any) {
+    if (error.status == 504) {
+      this.notificationService.notify('error', error.status, "Kunne ikke kontakte rest api.");
+    } else if (error.status == 404) {
+      this.notificationService.notify('error', error.status, error.message);
+    } else {
+      this.notificationService.notify('error', error.status, error.message);
+    }
   }
 
   //Crude implementation, expects the position of key to match position of value
@@ -82,10 +97,10 @@ export class BaseApiService {
     }
   }
 
-  setMethodName(methodName?:string){
+  setMethodName(methodName?: string) {
     return methodName ?
-       "/" + methodName // methodName
-      :  ""; // No methodName
+      "/" + methodName // methodName
+      : ""; // No methodName
   }
 
 }

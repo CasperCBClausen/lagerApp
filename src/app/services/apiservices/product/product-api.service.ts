@@ -4,21 +4,23 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Lager } from 'src/app/classes/Lager';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/classes/Product';
+import { NotificationService } from '../../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductApiService extends BaseApiService {
 
-  constructor(http:HttpClient) {
-    super(http);
+  constructor(http: HttpClient,
+    notificationService: NotificationService) {
+    super(http, notificationService);
   }
 
-  getAllProducts(){
-    return super.get<Product[]>("GetAllProducts");
+  getAllProducts() {
+    return super.get<any>("GetAllProducts");
   }
 
-  getMyProducts(items:string[]){
+  getMyProducts(items: string[]) {
 
     let keysAndValues = this.getKeysAndValues(items);
     let data = super.setData(keysAndValues[0], keysAndValues[1]);
@@ -26,11 +28,11 @@ export class ProductApiService extends BaseApiService {
     super.get("getMyProducts", data);
   }
 
-  saveProduct(item: Lager){
+  saveProduct(item: Lager) {
     super.post(item, "saveProduct");
   }
 
-  getKeysAndValues(items:string[]){
+  getKeysAndValues(items: string[]) {
     let keys: string[] = [];
     let values: string[] = [];
     items.forEach(element => {

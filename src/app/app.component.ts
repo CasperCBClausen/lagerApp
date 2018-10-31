@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { SpinnerService } from './services/spinner/spinner.service';
 import { Subscription } from 'rxjs';
 import { Message } from 'primeng/primeng';
@@ -20,8 +20,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private spinnerService: SpinnerService,
-    private notificationService: NotificationService
-  ){}
+    private notificationService: NotificationService,
+    private ref: ChangeDetectorRef
+  ){ }
 
   ngOnInit(){
     this.subscribeToSpinning();
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }else{
         this.spin--;
       }
+      this.ref.detectChanges();
     });
   }
 

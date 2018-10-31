@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import {IndService} from './services/ind/ind.service';
 import {StatusService} from './services/status/status.service';
 import {NotificationService} from './services/notification/notification.service';
 import {SpinnerService} from './services/spinner/spinner.service';
+import {ErrorHandlerService} from './services/errorhandling/error-handler.service';
 
 
 import {BaseApiService} from './services/apiservices/base/base-api.service';
@@ -80,6 +81,11 @@ const appRoutes: Routes = [
     GrowlModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerService,
+      multi: true
+    },
     IndService,
     StatusService,
     NotificationService,

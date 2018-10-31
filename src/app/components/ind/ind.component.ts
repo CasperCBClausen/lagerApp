@@ -28,7 +28,6 @@ export class IndComponent implements OnInit, OnDestroy {
     this.indTelefon = indService.indTelefon;
     this.indTelefonDetails = indService.indTelefonDetails;
     this.rememberedInputs = indService.rememberedInputs;
-    //this.phones = indService.phones;
     this.origins = indService.origins;
     this.deliveryMethods = indService.deliveryMethods;
   }
@@ -46,12 +45,10 @@ export class IndComponent implements OnInit, OnDestroy {
   deliveryMethods: SelectItem[];
 
   ngOnInit() {
-    this.productApiService.getAllProducts().subscribe(apiPhones => {
-      this.products = apiPhones;
-    },
-      error => {
-        this.notificationService.notify('error', "apiError", error);
-      });
+    this.productApiService.getAllProducts().subscribe(
+      res => { this.products = res},
+      err => { }
+    );
   }
 
   ngOnDestroy() {
@@ -65,12 +62,12 @@ export class IndComponent implements OnInit, OnDestroy {
     this.spinnerService.notify(true);
     this.showInStatus = this.indService.sendToStorage();
     this.spinnerService.notify(false);
-    // if(this.showInStatus){
-    //   setTimeout(() => { this.resizeOnClick("status") }, 50);
-    // }
   }
 
-  createProduct(){
-    this.productApiService.post(this.newProduct);
+  async createProduct() {
+    this.productApiService.post(this.newProduct).subscribe(
+      response => { 
+        this.notificationService.notify('success', "","Produkt Oprettet")
+       }); // response from the server if successful
   }
 }
