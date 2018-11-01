@@ -1,6 +1,6 @@
-import {Product} from '../classes/Product';
+import {Product} from './Product';
 
-export class Lager {
+export class Shipping {
   id: number;
   transType: string;
   imeisn: string;
@@ -9,5 +9,5 @@ export class Lager {
   invoice: string;
   date: Date;
   deliveryMethod: string;
-  tracking: string;
+  trackingNumber: string;
 }

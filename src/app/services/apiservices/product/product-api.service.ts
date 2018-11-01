@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseApiService } from '../base/base-api.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Lager } from 'src/app/classes/Lager';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/classes/Product';
 import { NotificationService } from '../../notification/notification.service';
@@ -11,9 +10,8 @@ import { NotificationService } from '../../notification/notification.service';
 })
 export class ProductApiService extends BaseApiService {
 
-  constructor(http: HttpClient,
-    notificationService: NotificationService) {
-    super(http, notificationService);
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getAllProducts() {
@@ -26,10 +24,6 @@ export class ProductApiService extends BaseApiService {
     let data = super.setData(keysAndValues[0], keysAndValues[1]);
 
     super.get("getMyProducts", data);
-  }
-
-  saveProduct(item: Lager) {
-    super.post(item, "saveProduct");
   }
 
   getKeysAndValues(items: string[]) {

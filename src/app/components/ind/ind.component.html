@@ -5,15 +5,15 @@
       <h3>Ind</h3>
       <div class="ui-g">
         <div class="ui-g-12">
-          <b *ngIf="indTelefon.imeisn">Imei: {{indTelefon.imeisn}}</b>
-          <b *ngIf="!indTelefon.imeisn">Indtast Imei/SN..</b>
+          <b *ngIf="newShipping.imeisn">Imei: {{newShipping.imeisn}}</b>
+          <b *ngIf="!newShipping.imeisn">Indtast Imei/SN..</b>
         </div>
       </div>
 
       <div class="ui-g">
         <div class="ui-g-2">Produkt</div>
         <div class="ui-g-10 product-dropdown">
-          <p-dropdown [options]="products" [(ngModel)]="indTelefon.product" optionLabel="name" [style]="{'width':'12em'}" filter="true">
+          <p-dropdown [options]="products" [(ngModel)]="newShipping.product" optionLabel="name" [style]="{'width':'12em'}" filter="true">
             <ng-template let-item pTemplate="selectedItem">
               <img src="assets/showcase/images/demo/phone/OnePlus3.jpg" style="width:16px;vertical-align:middle" />
               <span style="vertical-align:middle; margin-left: .5em">{{item.value.name}}</span>
@@ -33,7 +33,7 @@
       <div class="ui-g">
         <div class="ui-g-2"><span>Fra</span></div>
         <div class="ui-g-10">
-          <p-dropdown [options]="origins" [style]="{'width':'12em'}" [(ngModel)]="indTelefon.origin"></p-dropdown>
+          <p-dropdown [options]="origins" [style]="{'width':'12em'}" [(ngModel)]="newShipping.origin"></p-dropdown>
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="origin" label="" [(ngModel)]="rememberedInputs"
             inputId="origin"></p-checkbox>
         </div>
@@ -42,7 +42,7 @@
       <!-- <div class="ui-g">
         <div class="ui-g-2"><span>Navn</span></div>
         <div class="ui-g-10">
-          <input id="input" class="ng-dirty ng-invalid" type="text" size="20" pInputText [(ngModel)]="indTelefon.name">
+          <input id="input" class="ng-dirty ng-invalid" type="text" size="20" pInputText [(ngModel)]="newShipping.name">
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="name" label="" [(ngModel)]="rememberedInputs"
             inputId="name"></p-checkbox>
         </div>
@@ -51,15 +51,15 @@
       <div class="ui-g">
         <div class="ui-g-2"><span>Faktura/ID</span></div>
         <div class="ui-g-10">
-          <input id="input" type="text" class="ng-dirty ng-invalid" size="20" pInputText [(ngModel)]="indTelefon.invoice">
-          <p-checkbox class="checkbox" name="checkBoxGroup1" value="id" label="" [(ngModel)]="rememberedInputs" inputId="id"></p-checkbox>
+          <input id="input" type="text" class="ng-dirty ng-invalid" size="20" pInputText [(ngModel)]="newShipping.invoice">
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="invoice" label="" [(ngModel)]="rememberedInputs" inputId="invoice"></p-checkbox>
         </div>
       </div>
 
       <div class="ui-g">
         <div class="ui-g-2"><span>Dato</span></div>
         <div class="ui-g-10">
-          <p-calendar [(ngModel)]="indTelefon.date" dateFormat="mm/dd/yy"></p-calendar>
+          <p-calendar [(ngModel)]="newShipping.date" dateFormat="mm/dd/yy"></p-calendar>
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="date" label="" [(ngModel)]="rememberedInputs"
             inputId="date"></p-checkbox>
         </div>
@@ -68,7 +68,7 @@
       <div class="ui-g">
         <div class="ui-g-2"><span>Leveringsmetode</span></div>
         <div class="ui-g-10">
-          <p-dropdown [options]="deliveryMethods" [style]="{'width':'12em'}" [(ngModel)]="indTelefon.deliveryMethod"></p-dropdown>
+          <p-dropdown [options]="deliveryMethods" [style]="{'width':'12em'}" [(ngModel)]="newShipping.deliveryMethod"></p-dropdown>
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="deliveryMethod" label="" [(ngModel)]="rememberedInputs"
             inputId="deliveryMethod"></p-checkbox>
         </div>
@@ -77,7 +77,7 @@
       <div class="ui-g">
         <div class="ui-g-2"><span>Tracking</span></div>
         <div class="ui-g-10">
-          <input id="input" type="text" size="20" pInputText [(ngModel)]="indTelefon.tracking">
+          <input id="input" type="text" size="20" pInputText [(ngModel)]="newShipping.trackingNumber">
           <p-checkbox class="checkbox" name="checkBoxGroup1" value="tracking" label="" [(ngModel)]="rememberedInputs"
             inputId="tracking"></p-checkbox>
         </div>
@@ -86,15 +86,15 @@
       <div class="ui-g">
         <div class="ui-g-2"><span><b>Imei/SN</b></span></div>
         <div class="ui-g-10">
-          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="indTelefon.imeisn">
-          <p-checkbox class="checkbox" name="checkBoxGroup1" value="imei" label="" [(ngModel)]="rememberedInputs"
+          <input id="input" type="text" size="20" pInputText class="withBorders" [(ngModel)]="newShipping.imeisn">
+          <p-checkbox class="checkbox" name="checkBoxGroup1" value="imeisn" label="" [(ngModel)]="rememberedInputs"
             inputId="imei"></p-checkbox>
         </div>
       </div>
 
       <div class="ui-g">
           <div class="ui-g-2 storeItemButton">
-              <button pButton type="button" label="til lager ->" (click)="sendToStorage()"></button>
+              <button pButton type="button" label="til lager ->" (click)="sendShippingToStorage()"></button>
           </div>
           <div class="ui-g-12 storeItemButton">
             <button pButton type="button" label="Opret Produkt ->" (click)="createProduct()"></button>

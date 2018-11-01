@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { RequestOptions, Headers } from '@angular/http';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from '../../notification/notification.service';
 
 
 const API_URL = environment.apiUrl;
@@ -13,8 +12,7 @@ const API_URL = environment.apiUrl;
 export class BaseApiService {
 
   constructor(
-    private http: HttpClient,
-    private notificationService: NotificationService
+    private http: HttpClient
   ) {
   }
 
@@ -22,11 +20,11 @@ export class BaseApiService {
     return this.constructor.name.split('ApiService')[0];
   }
 
-  get<T>(methodName?: string, data?: HttpParams) {
+  get<T>(methodName?: string, params?: HttpParams) {
 
     let paramsUrl = this.setMethodName(methodName)
-
-    return this.http.get<T>(API_URL + '/' + this.getName() + paramsUrl, { params: data });
+   
+    return this.http.get<T>(API_URL + '/' + this.getName() + paramsUrl, { params: params });
       // .subscribe(
       //   response => { return response }, // response from the server if successful
       //   error => { this.handleErrorResponse(error) }, // Error from the server if something goes bad
@@ -47,22 +45,22 @@ export class BaseApiService {
   put(data: any, methodName?: string, params?: HttpParams) {
     let paramsUrl = this.setMethodName(methodName)
 
-    this.http.put(API_URL + '/' + this.getName() + paramsUrl, data, { params: params })
-      .subscribe(
-        response => { this.notificationService.notify('success', "Update", response.toString()) }, // response from the server if successful
-        error => { this.handleErrorResponse(error) }, // Error from the server if something goes bad
-        () => { "this is run if the call completes successfully" }); // if the entire call is successful.
+    return this.http.put(API_URL + '/' + this.getName() + paramsUrl, data, { params: params });
+      // .subscribe(
+      //   response => { this.notificationService.notify('success', "Update", response.toString()) }, // response from the server if successful
+      //   error => { this.handleErrorResponse(error) }, // Error from the server if something goes bad
+      //   () => { "this is run if the call completes successfully" }); // if the entire call is successful.
 
   }
 
   delete(methodName?: string, data?: HttpParams) {
     let paramsUrl = this.setMethodName(methodName)
 
-    this.http.delete(API_URL + '/' + this.getName() + paramsUrl, { params: data })
-      .subscribe(
-        response => { this.notificationService.notify('success', "Delete", response.toString()) },
-        error => { this.handleErrorResponse(error) },
-        () => { });
+    this.http.delete(API_URL + '/' + this.getName() + paramsUrl, { params: data });
+      // .subscribe(
+      //   response => { this.notificationService.notify('success', "Delete", response.toString()) },
+      //   error => { this.handleErrorResponse(error) },
+      //   () => { });
 
   }
 
@@ -72,16 +70,6 @@ export class BaseApiService {
     });
 
     return new RequestOptions({ headers: headers });
-  }
-
-  handleErrorResponse(error: any) {
-    if (error.status == 504) {
-      this.notificationService.notify('error', error.status, "Kunne ikke kontakte rest api.");
-    } else if (error.status == 404) {
-      this.notificationService.notify('error', error.status, error.message);
-    } else {
-      this.notificationService.notify('error', error.status, error.message);
-    }
   }
 
   //Crude implementation, expects the position of key to match position of value

@@ -38,9 +38,9 @@ export class ErrorHandlerService implements HttpInterceptor {
   handleErrorResponse(error: any) {
     if (error.status == 504) {
       this.notificationService.notify('error', error.status, "Kunne ikke kontakte rest api.");
-    } else if (error.status == 200) {
+    } else if (error.status == 400) {
       if (error.error != null) {
-        this.notificationService.notify('error', "", error.error.text);
+        this.notificationService.notify('error', "", error.error);
       } else {
         this.notificationService.notify('error', error.status, error.message);
       }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule} from 'primeng/primeng';
+import {CardModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { IndComponent } from './components/ind/ind.component';
@@ -22,6 +23,7 @@ import {ErrorHandlerService} from './services/errorhandling/error-handler.servic
 
 import {BaseApiService} from './services/apiservices/base/base-api.service';
 import {ProductApiService} from './services/apiservices/product/product-api.service';
+import {ShippingApiService} from './services/apiservices/shipping/shipping-api.service';
 const appRoutes: Routes = [
   {
     path: 'home',
@@ -78,7 +80,8 @@ const appRoutes: Routes = [
     DropdownModule,
     CheckboxModule,
     CalendarModule,
-    GrowlModule
+    GrowlModule,
+    CardModule
   ],
   providers: [
     {
@@ -91,6 +94,7 @@ const appRoutes: Routes = [
     NotificationService,
     SpinnerService,
     ProductApiService,
+    ShippingApiService,
     BaseApiService
   ],
   bootstrap: [AppComponent]

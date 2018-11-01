@@ -3,7 +3,84 @@
   <div class="ui-g">
     <div class="ui-g-12 noPadding fullPage" id="udSquare" style="background-color:#7c81d3;">
       <h3>Ud</h3>
-      
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <div class="ui-g">
+            <div class="ui-g-12">
+              <h3 class="searchHeader">Søg på Imei/SN</h3>
+              <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-barcode"></i></span>
+                <input type="text" pInputText placeholder="Imei/SN" [(ngModel)]="imeisn">
+                <button pButton type="button" label="Søg" class="ui-button-info" (click)="getShippingsByImeisn(imeisn)"></button>
+              </div>
+            </div>
+
+            <div class="ui-g-12" *ngIf="shipping != null">
+              <p-card>
+                <p-header>
+                  <b>{{shipping.imeisn}}</b>
+                </p-header>
+
+                <!-- content -->
+                <div class="ui-g">
+                  <div class="ui-g-6 ui-md-4 ui-lg-3 withBorderTop">
+                    <span>Produkt</span>
+                  </div>
+                  <div class="ui-g-6 ui-md-8 ui-lg-9 withBorderTop">
+                    <p>{{shipping.product.name}}</p>
+                    <p>{{shipping.product.sku}}</p>
+                  </div>
+                  <div class="ui-g-6 ui-md-4 ui-lg-3 withBorderTop">
+                    <span>Fra</span>
+                  </div>
+                  <div class="ui-g-6 ui-md-8 ui-lg-9 withBorderTop">
+                    {{shipping.origin}}
+                  </div>
+                  <div class="ui-g-6 ui-md-4 ui-lg-3 withBorderTop">
+                    <span>Faktura/ID</span>
+                  </div>
+                  <div class="ui-g-6 ui-md-8 ui-lg-9 withBorderTop">
+                    {{shipping.invoice}}
+                  </div>
+                  <div class="ui-g-6 ui-md-4 ui-lg-3 withBorderTop">
+                    <span>Leveringsmetode</span>
+                  </div>
+                  <div class="ui-g-6 ui-md-8 ui-lg-9 withBorderTop">
+                    {{shipping.deliveryMethod}}
+                  </div>
+                  <div class="ui-g-6 ui-md-4 ui-lg-3 withBorderTop">
+                    <span>trackingnummer</span>
+                  </div>
+                  <div class="ui-g-6 ui-md-8 ui-lg-9 withBorderTop">
+                    {{shipping.trackingNumber}}
+                  </div>
+                  <div class="ui-g-6 ui-md-4 ui-lg-3 withBorders">
+                    <span>Dato tilføjet</span>
+                  </div>
+                  <div class="ui-g-6 ui-md-8 ui-lg-9 withBorders">
+                    {{shipping.date | date:'dd-MM-yyyy O'}}
+                  </div>
+                </div>
+
+                <p-footer>
+                  <div class="ui-g">
+                    <div class="ui-g-6 ui-md-6 ui-lg-6 withBorderTop">
+                      <button icon="fa fa-truck" pButton type="button" label="Send fra lager" class="ui-button-success" (click)="sendShippingFromStorage()" ></button>
+                    </div>
+                    <div class="ui-g-6 ui-md-6 ui-lg-6 withBorderTop">
+                      <button pButton type="button" label="Send til bedste" class="ui-button-info"></button>
+                    </div>
+                  </div>
+                </p-footer>
+
+              </p-card>
+            </div>
+            <div class="ui-g-12" *ngIf="shipping == null">
+              <span>Ingen varer at vise</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
