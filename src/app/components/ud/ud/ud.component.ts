@@ -23,7 +23,8 @@ export class UdComponent implements OnInit {
 
   getShippingsByImeisn(){
     this.shippingApiService.getShippingFromImeisn(this.imeisn).subscribe(
-      res => { this.shipping = res },
+      res => { this.shipping = res
+                this.notificationService.logAction("UD", "Søgte på imeisn:", this.imeisn, new Date()) },
       err => {}
     );
   }
@@ -33,6 +34,7 @@ export class UdComponent implements OnInit {
     this.shippingApiService.updateShipping(this.shipping).subscribe(
       res => { 
         this.notificationService.notify('success', "", "Vare fjernet fra lager");
+        this.notificationService.logAction("UD", "Fjernede vare med imeisn:", this.shipping.imeisn, new Date())
         this.imeisn = "";
         this.shipping = null;
       }

@@ -89,7 +89,8 @@ export class IndComponent implements OnInit, OnDestroy {
 
     this.productApiService.post(this.newProduct).subscribe(
       response => {
-        this.notificationService.notify('success', "", "Produkt Oprettet")
+        this.notificationService.notify('success', "", "Produkt Oprettet");
+      this.notificationService.logAction("IND", "Produkt Oprettet",this.newProduct.name, new Date());
         this.updateProducts();
       }); // response from the server if successful
   }
@@ -97,30 +98,37 @@ export class IndComponent implements OnInit, OnDestroy {
   sendShippingToStorage() {
     if (!this.newShipping.date) {
       this.notificationService.notify('error', '', 'vælg dato');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
     if (!this.newShipping.deliveryMethod) {
       this.notificationService.notify('error', '', 'vælg leveringsmetode');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
     if (!this.newShipping.imeisn) {
       this.notificationService.notify('error', '', 'udfyld imeisn');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
     if (!this.newShipping.invoice) {
       this.notificationService.notify('error', '', 'udfyld faktura');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
     if (!this.newShipping.origin) {
       this.notificationService.notify('error', '', 'udfyld fra');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
     if (!this.newShipping.product) {
       this.notificationService.notify('error', '', 'vælg produkt');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
     if (!this.newShipping.trackingNumber) {
       this.notificationService.notify('error', '', 'udfyld tracking');
+      this.notificationService.logAction("IND", "Vare forsøgt lagt på lager, manglede info", "", new Date());
       return false;
     }
 
@@ -128,7 +136,8 @@ export class IndComponent implements OnInit, OnDestroy {
 
     this.shippingApiService.post(this.newShipping).subscribe(
       response => {
-        this.notificationService.notify('success', "", "Vare lagt på lageret")
+        this.notificationService.notify('success', "", "Vare lagt på lageret");
+        this.notificationService.logAction("IND", "Vare lagt på lageret med imeisn:", this.newShipping.imeisn, new Date())
       }); // response from the server if successful
 
     //this.statusService.createEvent("Tilføjet vare til lager med imei: "+ this.newShipping.imeisn);

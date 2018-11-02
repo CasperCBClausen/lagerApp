@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StatusService } from '../../../services/status/status.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { LogItem } from 'src/app/classes/LogItem';
 
 @Component({
   selector: 'app-status',
@@ -10,9 +12,9 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 })
 export class StatusComponent implements OnInit {
 
-  events: string[] = [];
+  log: LogItem[];
 
-  constructor(
+  constructor(private route: ActivatedRoute,
     private statusService: StatusService,
     private notificationService: NotificationService,
     private httpClient: HttpClient
@@ -20,8 +22,7 @@ export class StatusComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.statusService.updateEvents();
-    this.events = this.statusService.events;
+    this.log = this.notificationService.log != null ? this.notificationService.log.reverse() : this.notificationService.log;
   }
   
 }

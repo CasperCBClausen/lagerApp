@@ -16,6 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   spinnerSubscription: Subscription;
 
   msgs: Message[] = [];
+
   notificationSubscription: Subscription;
 
   constructor(
