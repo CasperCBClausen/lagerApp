@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule} from 'primeng/primeng';
 import {CardModule} from 'primeng/primeng';
+import {TableModule} from 'primeng/table';
 
 import { AppComponent } from './app.component';
 import { IndComponent } from './components/ind/ind.component';
@@ -81,7 +82,8 @@ const appRoutes: Routes = [
     CheckboxModule,
     CalendarModule,
     GrowlModule,
-    CardModule
+    CardModule,
+    TableModule
   ],
   providers: [
     {
