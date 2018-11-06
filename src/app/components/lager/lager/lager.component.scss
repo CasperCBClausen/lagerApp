@@ -13,8 +13,16 @@
     h3{
         text-align: center;
     }
-    //Virker ikke FIX!
+    .tableClass{
+        padding: 0.5em;
+
+        .ui-datepicker, .ui-datepicker-monthpicker, .ui-datepicker-calendar{
+            font-size: 10px;
+        }
+    }
+    //readjust font-size of inputtexts and paginator.
     .ui-inputtext, .ui-table .ui-paginator-bottom{ 
         font-size: 10px !important; 
-        }
+    }   
+
 }

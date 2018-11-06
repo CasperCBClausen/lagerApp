@@ -7,16 +7,6 @@
         <div class="tableClass">
           <p-table #dt [columns]="cols" [value]="shippings" [paginator]="true" [rows]="10" [tableStyle]="{'table-layout':'auto', 'font-size':'10px'}">
             <ng-template pTemplate="header" let-columns>
-              <!-- <tr>
-                        <th>imeisn</th>
-                        <th>Produkt</th>
-                        <th>Faktura</th>
-                        <th>Fra</th>
-                        <th>Forsendesmetode</th>
-                        <th>tracking nummer</th>
-                        <th>Dato</th>
-                    </tr> -->
-
               <tr>
                 <th *ngFor="let col of columns">
                   {{col.header}}
@@ -28,25 +18,34 @@
                     <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
                   </div>
-                  <p-dropdown *ngSwitchCase="'product'" [options]="products" optionLabel="name" [style]="{'width':'100%'}"
-                    (onChange)="dt.filter($event.value, col.field.name, 'equals')"></p-dropdown>
+                  <div *ngSwitchCase="'product'">
+                    <p-dropdown [options]="products" placeholder="filtrér på produkt" optionLabel="name" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value.name, 'product.name', 'equals')"></p-dropdown>
+                  </div>
                   <div *ngSwitchCase="'invoice'" class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
                   </div>
                   <div *ngSwitchCase="'origin'" class="ui-inputgroup">
-                      <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-                      <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
-                    </div>
-                    <div *ngSwitchCase="'deliveryMethod'" class="ui-inputgroup">
-                        <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-                        <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
-                      </div>
-                      <div *ngSwitchCase="'trackingNumber'" class="ui-inputgroup">
-                          <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-                          <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
-                        </div>
-            
+                    <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+                  </div>
+                  <div *ngSwitchCase="'deliveryMethod'" class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+                  </div>
+                  <div *ngSwitchCase="'trackingNumber'" class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+                  </div>
+                  <div *ngSwitchCase="'date'">
+                      <p-calendar
+                      [(ngModel)]="dateRanges"
+                      appendTo="body"
+                      selectionMode="range"
+                      [readonlyInput]="false"
+                      dateFormat="dd.mm.yy"
+                      (onSelect)="dt.filter($event, col.field, 'myDateRangeFilter')"></p-calendar>
+                </div>
                 </th>
               </tr>
             </ng-template>
@@ -54,6 +53,7 @@
               <tr [pSelectableRow]="rowData">
                 <td *ngFor="let col of columns" [ngSwitch]="col.field">
                   <i *ngSwitchCase="'product'">{{rowData[col.field].name}}</i>
+                  <i *ngSwitchCase="'date'">{{rowData[col.field] | date:'dd-MM-yyyy O'}}</i>
                   <i *ngSwitchDefault>{{rowData[col.field]}}</i>
                 </td>
               </tr>
