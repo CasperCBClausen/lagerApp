@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {InputTextModule, GrowlModule, CalendarModule, ButtonModule, CheckboxModule, DropdownModule} from 'primeng/primeng';
-import {CardModule} from 'primeng/primeng';
+import {CardModule, ConfirmDialogModule} from 'primeng/primeng';
 import {TableModule} from 'primeng/table';
+import {ConfirmationService} from 'primeng/api';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { IndComponent } from './components/ind/ind.component';
@@ -83,7 +85,9 @@ const appRoutes: Routes = [
     CalendarModule,
     GrowlModule,
     CardModule,
-    TableModule
+    TableModule,
+    ConfirmDialogModule,
+    ColorPickerModule
   ],
   providers: [
     {
@@ -97,7 +101,8 @@ const appRoutes: Routes = [
     SpinnerService,
     ProductApiService,
     ShippingApiService,
-    BaseApiService
+    BaseApiService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

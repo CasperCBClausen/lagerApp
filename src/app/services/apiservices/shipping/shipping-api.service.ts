@@ -16,7 +16,11 @@ export class ShippingApiService extends BaseApiService {
   }
 
   getAllActiveShippings() {
-    return super.get<any>("GetAllActiveShippings");
+    return super.get<Shipping[]>("GetAllActiveShippings");
+  }
+
+  getCompletedShippings() {
+    return super.get<Shipping[]>("GetCompletedShippings");
   }
 
   getShippingFromImeisn(imeisn: string){

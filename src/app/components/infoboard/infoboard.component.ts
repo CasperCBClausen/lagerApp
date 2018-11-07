@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DatePipe} from '@angular/common';
+import { ShippingApiService } from 'src/app/services/apiservices/shipping/shipping-api.service';
 
 @Component({
   selector: 'app-infoboard',
@@ -10,13 +11,28 @@ export class InfoboardComponent implements OnInit {
 
   
   clock:Date = new Date();
-  merchSold: number = 7;
-  totalValue: number = 3400*this.merchSold;
-  totalProfit: number = this.totalValue-(2540*this.merchSold); 
-  constructor() { }
+  merchInStorage: number;
+  merchInStorageThisMonth: number;
+  merchSold: number;
+  merchSoldThisMonth: number;
+  profitThisMonth: number;
+  profitTotal: number; 
+  constructor(private shippingApiService: ShippingApiService) { }
 
   ngOnInit() {
     this.startClock();
+    this.shippingApiService.getCompletedShippings().subscribe(
+      res => {
+        this.merchSold = res.length;
+        this.merchSoldThisMonth = res.filter(shipping => new Date(shipping.date).getMonth() == new Date().getMonth()).length;
+      }
+    )
+    this.shippingApiService.getAllActiveShippings().subscribe(
+      res => {
+        this.merchInStorage = res.length;
+        this.merchInStorageThisMonth = res.filter(shipping => new Date(shipping.date).getMonth() == new Date().getMonth()).length;
+      }
+    )
   }
 
   startClock(){

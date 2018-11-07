@@ -1,5 +1,5 @@
 .appContainer{
-
+    overflow: hidden;
     .psContainer{
         position: absolute;
         width: 100%;
@@ -78,26 +78,20 @@
                 //color: black;
             }
         }
+        
+        .pageMenuFooter{
+            position: fixed;
+            bottom: 0;
+        }
     }
 
     .pageView{
         padding:0em;
     }
-}
 
-@keyframes ui-progress-spinner-color {
-    100%,
-    0% {
-        stroke: #ffffff;
-    }
-    40% {
-        stroke: #929292;
-    }
-    66% {
-        stroke: #363636;
-    }
-    80%,
-    90% {
-        stroke: #111111;
+    .colorPicker{
+        background-color: blueviolet;
+        cursor: pointer;
+        border-radius: 10px;
     }
 }

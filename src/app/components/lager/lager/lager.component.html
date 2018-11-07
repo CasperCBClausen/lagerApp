@@ -5,21 +5,28 @@
       <h3>Lager</h3>
       <div class="ui-g">
         <div class="tableClass">
-          <p-table #dt [columns]="cols" [value]="shippings" [paginator]="true" [rows]="10" [tableStyle]="{'table-layout':'auto', 'font-size':'10px'}">
+          <p-table #dt [columns]="cols" [value]="shippings" [paginator]="true" [rows]="16" [tableStyle]="{'table-layout':'auto', 'font-size':'10px'}">
             <ng-template pTemplate="header" let-columns>
               <tr>
+                <th>
+                  <!-- empty header for buttons -->
+                </th>
                 <th *ngFor="let col of columns">
                   {{col.header}}
                 </th>
               </tr>
               <tr>
+                <th>
+                  <!-- empty subheader -->
+                </th>
                 <th *ngFor="let col of columns" [ngSwitch]="col.field">
                   <div *ngSwitchCase="'imeisn'" class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
                     <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
                   </div>
-                  <div *ngSwitchCase="'product'">
-                    <p-dropdown [options]="products" placeholder="filtrér på produkt" optionLabel="name" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value.name, 'product.name', 'equals')"></p-dropdown>
+                  <div *ngSwitchCase="'product'" class="ui-inputgroup">
+                      <span *ngIf="selectedProduct != null" class="ui-inputgroup-addon" style="cursor: pointer" (click)="selectedProduct = null;dt.filter('dummyValue', 'product.name', 'clearXFilter')"><i class="fa fa-times"></i></span>
+                    <p-dropdown #dd [options]="products" [(ngModel)]="selectedProduct" placeholder="filtrér på produkt" optionLabel="name" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value.name, 'product.name', 'equals')"></p-dropdown>
                   </div>
                   <div *ngSwitchCase="'invoice'" class="ui-inputgroup">
                     <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
@@ -42,6 +49,8 @@
                       [(ngModel)]="dateRanges"
                       appendTo="body"
                       selectionMode="range"
+                      showButtonBar="true"
+                      (onClearClick)="dt.filter('dummyValue', col.field, 'clearXFilter')"
                       [readonlyInput]="false"
                       dateFormat="dd.mm.yy"
                       (onSelect)="dt.filter($event, col.field, 'myDateRangeFilter')"></p-calendar>
@@ -51,6 +60,10 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
               <tr [pSelectableRow]="rowData">
+                <td>
+                    <button pButton type="button" icon="fa fa-times" class="ui-button-danger" (click)="deleteShipping(rowData)" ></button>
+                    <!-- <button pButton type="button" icon="pi pi-check" class="ui-button-info" ></button> -->
+                </td>
                 <td *ngFor="let col of columns" [ngSwitch]="col.field">
                   <i *ngSwitchCase="'product'">{{rowData[col.field].name}}</i>
                   <i *ngSwitchCase="'date'">{{rowData[col.field] | date:'dd-MM-yyyy O'}}</i>
